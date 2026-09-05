@@ -107,6 +107,19 @@ pnpm exec playwright install chromium
 pnpm test:e2e
 ```
 
+## Despliegue
+
+Las Cloud Functions son un paquete aparte, con su propio `package.json` y su propia compilación a
+`functions/lib`. El hook `predeploy` de `firebase.json` las instala y compila, así que basta con:
+
+```sh
+pnpm build
+firebase deploy --only "hosting,functions"
+```
+
+Las comillas alrededor de la lista son necesarias en PowerShell; sin ellas se parte en dos argumentos
+y el despliegue no encuentra sus objetivos.
+
 ## Licencia
 
 Sin licencia de uso. El código está publicado para su lectura y revisión; todos los derechos

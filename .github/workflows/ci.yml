@@ -48,3 +48,27 @@ jobs:
 
       - name: Dependencias vulnerables
         run: pnpm audit --audit-level=high
+
+  functions:
+    name: Cloud Functions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: functions/pnpm-lock.yaml
+
+      - name: Instalar dependencias
+        run: pnpm --dir functions install --frozen-lockfile
+
+      - name: Compilar (tsc estricto)
+        run: pnpm --dir functions run build

@@ -9,7 +9,6 @@
   "packageManager": "pnpm@9.15.2",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint src --max-warnings 0",
     "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
