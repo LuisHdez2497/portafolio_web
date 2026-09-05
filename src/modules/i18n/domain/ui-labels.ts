@@ -38,6 +38,7 @@ export interface UiLabels {
     databases: string
     cloud: string
     devops: string
+    ai: string
     tools: string
   }
 }
@@ -81,6 +82,7 @@ export const UI_LABELS: Record<Locale, UiLabels> = {
       databases: 'Bases de Datos',
       cloud: 'Cloud',
       devops: 'DevOps e IaC',
+      ai: 'IA y Desarrollo por Especificación',
       tools: 'Herramientas',
     },
   },
@@ -122,6 +124,7 @@ export const UI_LABELS: Record<Locale, UiLabels> = {
       databases: 'Databases',
       cloud: 'Cloud',
       devops: 'DevOps & IaC',
+      ai: 'AI & Spec-Driven Development',
       tools: 'Tools',
     },
   },
