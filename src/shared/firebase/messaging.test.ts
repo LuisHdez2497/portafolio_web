@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 const vapid = vi.hoisted(() => ({ value: '' }))
 
-vi.mock('@/shared/firebase', () => ({ app: {}, db: {} }))
+vi.mock('@/shared/firebase', () => ({ getFirebaseApp: () => ({}), getDb: () => ({}) }))
 vi.mock('firebase/firestore', () => ({
   doc: vi.fn(),
   serverTimestamp: vi.fn(),

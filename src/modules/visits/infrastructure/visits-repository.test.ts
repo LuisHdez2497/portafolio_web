@@ -17,7 +17,7 @@ vi.mock('firebase/firestore', () => ({
   Timestamp: class Timestamp {},
 }))
 
-vi.mock('@/shared/firebase', () => ({ db: {} }))
+vi.mock('@/shared/firebase', () => ({ getDb: () => ({}) }))
 
 describe('createVisitsRepository', () => {
   beforeEach(() => {
