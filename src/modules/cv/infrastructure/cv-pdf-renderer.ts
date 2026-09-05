@@ -76,7 +76,10 @@ function renderHeader(ctx: RenderContext, document: CvDocument, imageBase64?: st
   centered(ctx, document.location, 11, COLORS.secondary)
   ctx.y += 5
   const { contact, contactLabels } = document
-  centered(ctx, `${contactLabels.email}: ${contact.email} | ${contactLabels.phone}: ${contact.phone}`, 10, COLORS.secondary)
+  const mark = (channel: string) => (document.preferredChannel === channel ? ` (${contactLabels.preferred})` : '')
+  const email = `${contactLabels.email}: ${contact.email}${mark('email')}`
+  const whatsApp = `${contactLabels.whatsapp}: ${contact.phone}${mark('whatsapp')}`
+  centered(ctx, `${email} | ${whatsApp}`, 10, COLORS.secondary)
   ctx.y += 4
   centered(ctx, `${contactLabels.portfolio}: ${contact.website}`, 10, COLORS.secondary)
   ctx.y += 4

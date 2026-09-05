@@ -11,6 +11,7 @@ const validInput: ProfileFormInput = {
     website: '',
     linkedin: '',
     github: '',
+    preferredChannel: 'whatsapp',
   },
 }
 

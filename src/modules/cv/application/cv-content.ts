@@ -90,6 +90,7 @@ export function buildCvDocument(source: CvSourceData, locale: Locale): CvDocumen
     location: profile.location,
     contact: profile.contact,
     contactLabels: labels.contact,
+    preferredChannel: profile.contact.preferredChannel,
     summary: localize(locale, profile.summary),
     sectionTitles: labels.sections,
     starLabels: labels.star,

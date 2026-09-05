@@ -4,6 +4,7 @@ import { useForm, type FieldErrors, type UseFormRegister } from 'react-hook-form
 import { useTranslationService } from '@/modules/i18n/application/use-translation-service'
 import { EditorSection } from '@/shared/components/cms/editor-section'
 import { LocalizedField } from '@/shared/components/cms/localized-field'
+import { SelectField } from '@/shared/components/cms/select-field'
 import { TextField } from '@/shared/components/cms/text-field'
 import { TranslateButton } from '@/shared/components/cms/translate-button'
 import { SubmitButton } from '@/shared/components/cms/submit-button'
@@ -29,10 +30,25 @@ function ContactFields({ register, errors }: ContactFieldsProps) {
     <div className="space-y-4 rounded-md border border-border/60 p-4">
       <span className="text-sm font-medium text-foreground">Contacto</span>
       <TextField label="Email" type="email" inputMode="email" error={errors.contact?.email?.message} {...register('contact.email')} />
-      <TextField label="Teléfono" type="tel" inputMode="tel" {...register('contact.phone')} />
+      <TextField
+        label="WhatsApp (con código de país)"
+        type="tel"
+        inputMode="tel"
+        placeholder="+52 667 000 0000"
+        {...register('contact.phone')}
+      />
       <TextField label="Sitio web" type="url" inputMode="url" placeholder="https://…" error={errors.contact?.website?.message} {...register('contact.website')} />
       <TextField label="LinkedIn" type="url" inputMode="url" placeholder="https://linkedin.com/in/…" error={errors.contact?.linkedin?.message} {...register('contact.linkedin')} />
       <TextField label="GitHub" type="url" inputMode="url" placeholder="https://github.com/…" error={errors.contact?.github?.message} {...register('contact.github')} />
+      <SelectField
+        label="Canal de contacto preferido"
+        options={[
+          { value: 'whatsapp', label: 'WhatsApp' },
+          { value: 'email', label: 'Email' },
+        ]}
+        error={errors.contact?.preferredChannel?.message}
+        {...register('contact.preferredChannel')}
+      />
     </div>
   )
 }
