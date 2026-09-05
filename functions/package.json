@@ -1,0 +1,30 @@
+{
+  "name": "functions",
+  "private": true,
+  "description": "Cloud Functions para registrar visitas y enviar notificaciones push.",
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "packageManager": "pnpm@9.15.2",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src --max-warnings 0",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^5.0.5",
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^5.1.1",
+    "ua-parser-js": "^1.0.39"
+  },
+  "devDependencies": {
+    "@types/ua-parser-js": "^0.7.39",
+    "typescript": "^5.7.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "body-parser": "1.20.5"
+    }
+  }
+}

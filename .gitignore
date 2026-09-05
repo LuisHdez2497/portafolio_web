@@ -1,0 +1,51 @@
+# Dependencies
+/node_modules
+
+# Build / output
+/dist
+coverage/
+*.tsbuildinfo
+
+# Test artifacts (Vitest / Playwright)
+/playwright-report
+/test-results
+/.vite
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / IDE (local de cada desarrollador)
+.vscode/
+.idea/
+.cursor/
+.fleet/
+.history/
+*.iml
+
+# OS artifacts
+.DS_Store
+._*
+Thumbs.db
+
+# Metodología, reglas y tableros propios: se quedan en local, fuera del repo público.
+.claude/
+CLAUDE.md
+.mcp.json
+/docs/
+
+# Firebase (cache/logs de la CLI; las reglas y config SÍ se versionan)
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# Vercel
+.vercel

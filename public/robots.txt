@@ -1,0 +1,8 @@
+# robots.txt for Luis Alfonso Hernández Portfolio
+# https://portfolio-luisalfonsohernandez.web.app
+
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://portfolio-luisalfonsohernandez.web.app/sitemap.xml
