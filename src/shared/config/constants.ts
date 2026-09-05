@@ -23,6 +23,8 @@ export const NOTIFICATION_PREFS_DOC = 'notifications'
 
 export const HEADSHOT_URL = '/software-developer-headshot.JPEG'
 
+export const EXPERIENCE_PREVIEW_COUNT = 3
+
 export const CV_FILE_NAMES = {
   es: 'CV_LuisAlfonsoHernandez_ES.pdf',
   en: 'CV_LuisAlfonsoHernandez_EN.pdf',
