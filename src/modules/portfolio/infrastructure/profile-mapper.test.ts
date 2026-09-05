@@ -25,6 +25,17 @@ describe('toProfile', () => {
     expect(profile.contact.email).toBe('')
     expect(profile.updatedAt).toBeUndefined()
   })
+
+  it('conserva el canal de contacto preferido cuando es conocido', () => {
+    const profile = toProfile({ contact: { preferredChannel: 'email' } })
+    expect(profile.contact.preferredChannel).toBe('email')
+  })
+
+  it('cae en WhatsApp cuando el canal falta o no se reconoce', () => {
+    expect(toProfile({}).contact.preferredChannel).toBe('whatsapp')
+    expect(toProfile({ contact: {} }).contact.preferredChannel).toBe('whatsapp')
+    expect(toProfile({ contact: { preferredChannel: 'paloma-mensajera' } }).contact.preferredChannel).toBe('whatsapp')
+  })
 })
 
 describe('toProfileDocument', () => {

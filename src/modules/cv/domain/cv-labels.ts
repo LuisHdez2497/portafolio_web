@@ -26,10 +26,11 @@ export const CV_LABELS: Record<Locale, CvLabels> = {
     },
     contact: {
       email: 'Email',
-      phone: 'Teléfono',
+      whatsapp: 'WhatsApp',
       portfolio: 'Portafolio',
       linkedin: 'LinkedIn',
       github: 'GitHub',
+      preferred: 'preferido',
     },
   },
   en: {
@@ -50,10 +51,11 @@ export const CV_LABELS: Record<Locale, CvLabels> = {
     },
     contact: {
       email: 'Email',
-      phone: 'Phone',
+      whatsapp: 'WhatsApp',
       portfolio: 'Portfolio',
       linkedin: 'LinkedIn',
       github: 'GitHub',
+      preferred: 'preferred',
     },
   },
 }

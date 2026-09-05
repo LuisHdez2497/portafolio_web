@@ -7,7 +7,7 @@ const profile = {
   name: 'Luis',
   location: 'México',
   summary: { es: 'Perfil', en: '' },
-  contact: { email: 'a@b.com', phone: '', website: '', linkedin: '', github: '' },
+  contact: { email: 'a@b.com', phone: '', website: '', linkedin: '', github: '', preferredChannel: 'whatsapp' as const },
 }
 
 describe('ProfileForm', () => {

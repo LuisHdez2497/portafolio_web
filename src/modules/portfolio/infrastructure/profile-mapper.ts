@@ -1,7 +1,7 @@
 import type { DocumentData } from 'firebase/firestore'
 import { toLocalizedText } from '@/shared/infrastructure/localized-mapper'
 import { toDate } from '@/shared/firebase/timestamp'
-import type { Contact, Profile } from '../domain/entities'
+import { CONTACT_CHANNELS, type Contact, type ContactChannel, type Profile } from '../domain/entities'
 
 interface ContactDocument {
   email?: string
@@ -9,6 +9,11 @@ interface ContactDocument {
   website?: string
   linkedin?: string
   github?: string
+  preferredChannel?: string
+}
+
+function toChannel(value: string | undefined): ContactChannel {
+  return CONTACT_CHANNELS.find((channel) => channel === value) ?? 'whatsapp'
 }
 
 function toContact(data: ContactDocument | undefined): Contact {
@@ -18,6 +23,7 @@ function toContact(data: ContactDocument | undefined): Contact {
     website: data?.website ?? '',
     linkedin: data?.linkedin ?? '',
     github: data?.github ?? '',
+    preferredChannel: toChannel(data?.preferredChannel),
   }
 }
 

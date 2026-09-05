@@ -7,7 +7,14 @@ const profile: Profile = {
   name: 'Luis Alfonso',
   location: 'México',
   summary: { es: 'Perfil general', en: 'General profile' },
-  contact: { email: 'a@b.com', phone: '123', website: 'https://site', linkedin: 'https://linkedin', github: 'https://github' },
+  contact: {
+    email: 'a@b.com',
+    phone: '+52 667 104 8290',
+    website: 'https://site',
+    linkedin: 'https://linkedin',
+    github: 'https://github',
+    preferredChannel: 'whatsapp',
+  },
 }
 
 const skills: SkillCategory[] = [
