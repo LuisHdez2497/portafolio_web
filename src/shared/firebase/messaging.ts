@@ -2,7 +2,7 @@ import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { getMessaging, getToken, isSupported, type Messaging } from 'firebase/messaging'
 import { COLLECTIONS } from '@/shared/config/constants'
 import { getEnv } from '@/shared/config/env'
-import { app, db } from '@/shared/firebase'
+import { getDb, getFirebaseApp } from '@/shared/firebase'
 
 export type PushStatus = 'granted' | 'blocked' | 'unsupported' | 'default' | 'error'
 
@@ -22,7 +22,7 @@ function isPushCapable(): boolean {
 }
 
 async function resolveMessaging(): Promise<Messaging | null> {
-  return isPushCapable() && (await isSupported()) ? getMessaging(app) : null
+  return isPushCapable() && (await isSupported()) ? getMessaging(getFirebaseApp()) : null
 }
 
 function getMessagingInstance(): Promise<Messaging | null> {
@@ -63,7 +63,7 @@ async function fetchToken(messaging: Messaging): Promise<string | null> {
 }
 
 async function storeToken(token: string): Promise<void> {
-  await setDoc(doc(db, COLLECTIONS.pushTokens, clientId()), {
+  await setDoc(doc(getDb(), COLLECTIONS.pushTokens, clientId()), {
     token,
     userAgent: navigator.userAgent,
     updatedAt: serverTimestamp(),

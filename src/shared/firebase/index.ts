@@ -4,14 +4,20 @@ import { initializeFirestore, type Firestore } from 'firebase/firestore'
 import { getStorage, type FirebaseStorage } from 'firebase/storage'
 import { getEnv } from '@/shared/config/env'
 
-function resolveApp(): FirebaseApp {
+let app: FirebaseApp | null = null
+let firestore: Firestore | null = null
+let authentication: Auth | null = null
+let fileStorage: FirebaseStorage | null = null
+
+export function getFirebaseApp(): FirebaseApp {
+  if (app) return app
   const existing = getApps()
   if (existing.length > 0) {
-    return existing[0]
+    app = existing[0]
+    return app
   }
-
   const env = getEnv()
-  return initializeApp({
+  app = initializeApp({
     apiKey: env.VITE_FIREBASE_API_KEY,
     authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
     projectId: env.VITE_FIREBASE_PROJECT_ID,
@@ -20,10 +26,20 @@ function resolveApp(): FirebaseApp {
     appId: env.VITE_FIREBASE_APP_ID,
     measurementId: env.VITE_FIREBASE_MEASUREMENT_ID,
   })
+  return app
 }
 
-export const app = resolveApp()
+export function getDb(): Firestore {
+  firestore ??= initializeFirestore(getFirebaseApp(), { experimentalForceLongPolling: true })
+  return firestore
+}
 
-export const db: Firestore = initializeFirestore(app, { experimentalForceLongPolling: true })
-export const auth: Auth = getAuth(app)
-export const storage: FirebaseStorage = getStorage(app)
+export function getFirebaseAuth(): Auth {
+  authentication ??= getAuth(getFirebaseApp())
+  return authentication
+}
+
+export function getFirebaseStorage(): FirebaseStorage {
+  fileStorage ??= getStorage(getFirebaseApp())
+  return fileStorage
+}

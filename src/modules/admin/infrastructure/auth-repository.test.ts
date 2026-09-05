@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/shared/firebase', () => ({ auth: {} }))
+vi.mock('@/shared/firebase', () => ({ getFirebaseAuth: () => ({}) }))
 vi.mock('firebase/auth', () => ({
   onAuthStateChanged: vi.fn(() => vi.fn()),
   signInWithEmailAndPassword: vi.fn(),

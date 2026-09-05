@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/shared/firebase', () => ({ db: {} }))
+vi.mock('@/shared/firebase', () => ({ getDb: () => ({}) }))
 vi.mock('firebase/firestore', () => ({
   doc: vi.fn(() => 'docRef'),
   onSnapshot: vi.fn(() => vi.fn()),

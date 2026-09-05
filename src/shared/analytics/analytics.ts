@@ -1,5 +1,5 @@
 import { getAnalytics, isSupported, logEvent, type Analytics } from 'firebase/analytics'
-import { app } from '@/shared/firebase'
+import { getFirebaseApp } from '@/shared/firebase'
 import { getEnv } from '@/shared/config/env'
 
 let instance: Analytics | null = null
@@ -10,7 +10,7 @@ export async function initAnalytics(): Promise<void> {
   initialized = true
   if (!getEnv().VITE_FIREBASE_MEASUREMENT_ID) return
   if (!(await isSupported())) return
-  instance = getAnalytics(app)
+  instance = getAnalytics(getFirebaseApp())
 }
 
 export function trackEvent(name: string, params?: Record<string, unknown>): void {
