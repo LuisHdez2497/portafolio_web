@@ -1,7 +1,7 @@
 import { collection, deleteDoc, doc, limit, onSnapshot, orderBy, query, setDoc, writeBatch } from 'firebase/firestore'
 import type { VisitEventInput, VisitEventType } from '@shared/visit'
 import { COLLECTIONS, NOTIFICATION_PREFS_DOC } from '@/shared/config/constants'
-import { db } from '@/shared/firebase'
+import { getDb } from '@/shared/firebase'
 import type { NotificationPrefs } from '../domain/entities'
 import type { VisitsRepository } from '../domain/interfaces'
 import { toVisit } from './visits-mapper'
@@ -10,11 +10,11 @@ const RECORD_ENDPOINT = '/api/recordVisit'
 const VISITS_LIMIT = 100
 
 export function createVisitsRepository(): VisitsRepository {
-  const ref = collection(db, COLLECTIONS.visits)
+  const collectionRef = () => collection(getDb(), COLLECTIONS.visits)
   return {
     subscribe(onChange, onError) {
       return onSnapshot(
-        query(ref, orderBy('createdAt', 'desc'), limit(VISITS_LIMIT)),
+        query(collectionRef(), orderBy('createdAt', 'desc'), limit(VISITS_LIMIT)),
         (snapshot) => onChange(snapshot.docs.map((entry) => toVisit(entry.id, entry.data()))),
         (error) => onError(error),
       )
@@ -28,22 +28,22 @@ export function createVisitsRepository(): VisitsRepository {
       })
     },
     async remove(id: string) {
-      await deleteDoc(doc(db, COLLECTIONS.visits, id))
+      await deleteDoc(doc(getDb(), COLLECTIONS.visits, id))
     },
     async removeMany(ids: string[]) {
-      const batch = writeBatch(db)
-      for (const id of ids) batch.delete(doc(db, COLLECTIONS.visits, id))
+      const batch = writeBatch(getDb())
+      for (const id of ids) batch.delete(doc(getDb(), COLLECTIONS.visits, id))
       await batch.commit()
     },
     subscribeNotificationPrefs(onChange, onError) {
       return onSnapshot(
-        doc(db, COLLECTIONS.config, NOTIFICATION_PREFS_DOC),
+        doc(getDb(), COLLECTIONS.config, NOTIFICATION_PREFS_DOC),
         (snapshot) => onChange((snapshot.data() ?? {}) as NotificationPrefs),
         (error) => onError(error),
       )
     },
     async setNotificationPref(type: VisitEventType, enabled: boolean) {
-      await setDoc(doc(db, COLLECTIONS.config, NOTIFICATION_PREFS_DOC), { [type]: enabled }, { merge: true })
+      await setDoc(doc(getDb(), COLLECTIONS.config, NOTIFICATION_PREFS_DOC), { [type]: enabled }, { merge: true })
     },
   }
 }

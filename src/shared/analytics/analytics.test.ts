@@ -5,7 +5,7 @@ const getAnalytics = vi.fn(() => 'analyticsInstance')
 const isSupported = vi.fn(async () => true)
 
 vi.mock('firebase/analytics', () => ({ getAnalytics, isSupported, logEvent }))
-vi.mock('@/shared/firebase', () => ({ app: {} }))
+vi.mock('@/shared/firebase', () => ({ getFirebaseApp: () => ({}) }))
 vi.mock('@/shared/config/env', () => ({
   getEnv: () => ({ VITE_FIREBASE_MEASUREMENT_ID: 'G-TEST' }),
 }))

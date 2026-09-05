@@ -4,7 +4,7 @@ import {
   signOut,
   type User,
 } from 'firebase/auth'
-import { auth } from '@/shared/firebase'
+import { getFirebaseAuth } from '@/shared/firebase'
 import type { AdminUser } from '../domain/entities'
 import type { AuthRepository } from '../domain/interfaces'
 
@@ -22,13 +22,13 @@ function toAdminUser(user: User | null): AdminUser | null {
 export function createAuthRepository(): AuthRepository {
   return {
     async signIn(email, password) {
-      await signInWithEmailAndPassword(auth, email, password)
+      await signInWithEmailAndPassword(getFirebaseAuth(), email, password)
     },
     async signOut() {
-      await signOut(auth)
+      await signOut(getFirebaseAuth())
     },
     observe(onChange) {
-      return onAuthStateChanged(auth, (user) => onChange(toAdminUser(user)))
+      return onAuthStateChanged(getFirebaseAuth(), (user) => onChange(toAdminUser(user)))
     },
   }
 }
