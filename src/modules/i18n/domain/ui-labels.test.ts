@@ -21,9 +21,16 @@ describe('UI_LABELS', () => {
   })
 
   it('mantiene el subtitle coherente entre idiomas (H-I18N-2)', () => {
-    expect(UI_LABELS.es.subtitle).toContain('Arquitecto')
-    expect(UI_LABELS.en.subtitle).toContain('Architect')
+    expect(UI_LABELS.es.subtitle).toContain('Arquitectura')
+    expect(UI_LABELS.en.subtitle).toContain('Architecture')
     expect(UI_LABELS.es.subtitle).toContain('DevOps')
     expect(UI_LABELS.en.subtitle).toContain('DevOps')
+  })
+
+  it('declara el puesto real y deja la arquitectura como enfoque (H-I18N-3)', () => {
+    expect(UI_LABELS.es.subtitle).toContain('Desarrollador')
+    expect(UI_LABELS.en.subtitle).toContain('Developer')
+    expect(UI_LABELS.es.subtitle.startsWith('Arquitecto')).toBe(false)
+    expect(UI_LABELS.en.subtitle.startsWith('Solutions Architect')).toBe(false)
   })
 })
