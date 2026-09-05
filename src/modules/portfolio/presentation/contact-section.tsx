@@ -56,7 +56,7 @@ function ContactCard({ icon: Icon, label, value, href, preferredLabel }: Contact
         trackEvent('contact_click', { channel: label })
         trackContactVisit(label)
       }}
-      className={`${base}${highlight} hover:border-amber-400/40 hover:bg-white/[0.06]`}
+      className={`${base}${highlight} hover:border-amber-400/40 hover:bg-white/6`}
     >
       {inner}
     </a>
