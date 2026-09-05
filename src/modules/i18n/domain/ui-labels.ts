@@ -44,7 +44,7 @@ export interface UiLabels {
 
 export const UI_LABELS: Record<Locale, UiLabels> = {
   es: {
-    subtitle: 'Arquitecto de Soluciones · DevOps',
+    subtitle: 'Desarrollador Sr · Arquitectura de Soluciones y DevOps',
     tagline: 'Arquitecturas que un equipo puede sostener',
     sections: {
       skills: 'Stack Tecnológico',
@@ -85,7 +85,7 @@ export const UI_LABELS: Record<Locale, UiLabels> = {
     },
   },
   en: {
-    subtitle: 'Solutions Architect · DevOps',
+    subtitle: 'Senior Developer · Solutions Architecture & DevOps',
     tagline: 'Architecture a team can sustain',
     sections: {
       skills: 'Tech Stack',
