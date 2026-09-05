@@ -1,3 +1,5 @@
+import type { ContactChannel } from '@/modules/portfolio/domain/entities'
+
 interface CvContact {
   email: string
   phone: string
@@ -60,10 +62,11 @@ export interface CvStarLabels {
 
 export interface CvContactLabels {
   email: string
-  phone: string
+  whatsapp: string
   portfolio: string
   linkedin: string
   github: string
+  preferred: string
 }
 
 export interface CvDocument {
@@ -72,6 +75,7 @@ export interface CvDocument {
   location: string
   contact: CvContact
   contactLabels: CvContactLabels
+  preferredChannel: ContactChannel
   summary: string
   sectionTitles: CvSectionTitles
   starLabels: CvStarLabels

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { localizedTextSchema } from '@/shared/application/localized-dto'
 import { optionalUrl } from '@/shared/application/url-dto'
+import { CONTACT_CHANNELS } from '../domain/entities'
 
 const httpUrl = optionalUrl('Debe ser una URL http(s) válida')
 
@@ -14,6 +15,7 @@ export const profileFormSchema = z.object({
     website: httpUrl,
     linkedin: httpUrl,
     github: httpUrl,
+    preferredChannel: z.enum(CONTACT_CHANNELS),
   }),
 })
 

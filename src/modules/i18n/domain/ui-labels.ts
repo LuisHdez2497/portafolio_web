@@ -23,6 +23,14 @@ export interface UiLabels {
     showEarlierRoles: string
     showRecentRolesOnly: string
   }
+  contact: {
+    email: string
+    whatsapp: string
+    location: string
+    linkedin: string
+    github: string
+    preferred: string
+  }
   skillCategories: {
     mobile: string
     frontend: string
@@ -58,6 +66,14 @@ export const UI_LABELS: Record<Locale, UiLabels> = {
       showEarlierRoles: 'Ver empleos anteriores',
       showRecentRolesOnly: 'Ver solo los recientes',
     },
+    contact: {
+      email: 'Email',
+      whatsapp: 'WhatsApp',
+      location: 'Ubicación',
+      linkedin: 'LinkedIn',
+      github: 'GitHub',
+      preferred: 'Preferido',
+    },
     skillCategories: {
       mobile: 'Mobile',
       frontend: 'Frontend',
@@ -90,6 +106,14 @@ export const UI_LABELS: Record<Locale, UiLabels> = {
       showLess: 'Show less',
       showEarlierRoles: 'Show earlier roles',
       showRecentRolesOnly: 'Show recent only',
+    },
+    contact: {
+      email: 'Email',
+      whatsapp: 'WhatsApp',
+      location: 'Location',
+      linkedin: 'LinkedIn',
+      github: 'GitHub',
+      preferred: 'Preferred',
     },
     skillCategories: {
       mobile: 'Mobile',
