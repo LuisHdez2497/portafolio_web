@@ -20,6 +20,8 @@ export interface UiLabels {
     viewCredential: string
     showMore: string
     showLess: string
+    showEarlierRoles: string
+    showRecentRolesOnly: string
   }
   skillCategories: {
     mobile: string
@@ -53,6 +55,8 @@ export const UI_LABELS: Record<Locale, UiLabels> = {
       viewCredential: 'Ver credencial',
       showMore: 'Ver más',
       showLess: 'Ver menos',
+      showEarlierRoles: 'Ver empleos anteriores',
+      showRecentRolesOnly: 'Ver solo los recientes',
     },
     skillCategories: {
       mobile: 'Mobile',
@@ -84,6 +88,8 @@ export const UI_LABELS: Record<Locale, UiLabels> = {
       viewCredential: 'View credential',
       showMore: 'Show more',
       showLess: 'Show less',
+      showEarlierRoles: 'Show earlier roles',
+      showRecentRolesOnly: 'Show recent only',
     },
     skillCategories: {
       mobile: 'Mobile',
