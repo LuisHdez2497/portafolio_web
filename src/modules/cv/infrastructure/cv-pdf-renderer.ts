@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf'
-import type { CvDocument, CvExperienceEntry } from '../domain/entities'
+import type { CvDocument, CvExperienceEntry, CvSkillGroup } from '../domain/entities'
 
 type Rgb = [number, number, number]
 
@@ -12,6 +12,11 @@ const COLORS: Record<string, Rgb> = {
 
 const MARGIN = 15
 const IMAGE_SIZE = 30
+
+export const SKILL_LABEL_WIDTH = 35
+export const SKILL_CELL_PADDING = 3
+const SKILL_LINE_HEIGHT = 4.5
+const SKILL_MIN_ROW_HEIGHT = 9
 
 interface RenderContext {
   doc: jsPDF
@@ -103,30 +108,61 @@ function renderSummary(ctx: RenderContext, document: CvDocument): void {
   ctx.y += lines.length * 4 + 6
 }
 
+function skillBlockBaseline(top: number, rowHeight: number, lineCount: number): number {
+  return top + (rowHeight - lineCount * SKILL_LINE_HEIGHT) / 2 + 3.3
+}
+
+export interface SkillRowLayout {
+  labelLines: string[]
+  valueLines: string[]
+  rowHeight: number
+  valueWidth: number
+}
+
+export function skillRowLayout(doc: jsPDF, group: CvSkillGroup, contentWidth: number): SkillRowLayout {
+  const valueWidth = contentWidth - SKILL_LABEL_WIDTH
+  const inner = SKILL_CELL_PADDING * 2
+  doc.setFontSize(10)
+  doc.setFont('helvetica', 'bold')
+  const labelLines: string[] = doc.splitTextToSize(group.label, SKILL_LABEL_WIDTH - inner)
+  doc.setFont('helvetica', 'normal')
+  const valueLines: string[] = doc.splitTextToSize(group.skills, valueWidth - inner)
+  const tallest = Math.max(labelLines.length, valueLines.length)
+  return {
+    labelLines,
+    valueLines,
+    rowHeight: Math.max(tallest * SKILL_LINE_HEIGHT + 4, SKILL_MIN_ROW_HEIGHT),
+    valueWidth,
+  }
+}
+
+function renderSkillRow(ctx: RenderContext, group: CvSkillGroup): void {
+  const { labelLines, valueLines, rowHeight, valueWidth } = skillRowLayout(ctx.doc, group, ctx.contentWidth)
+  checkNewPage(ctx, rowHeight + 2)
+
+  ctx.doc.setFillColor(245, 245, 245)
+  ctx.doc.rect(MARGIN, ctx.y, SKILL_LABEL_WIDTH, rowHeight, 'F')
+  ctx.doc.setDrawColor(200, 200, 200)
+  ctx.doc.rect(MARGIN, ctx.y, SKILL_LABEL_WIDTH, rowHeight, 'S')
+  ctx.doc.rect(MARGIN + SKILL_LABEL_WIDTH, ctx.y, valueWidth, rowHeight, 'S')
+
+  ctx.doc.setFont('helvetica', 'bold')
+  ctx.doc.setTextColor(...COLORS.primary)
+  ctx.doc.text(labelLines, MARGIN + SKILL_CELL_PADDING, skillBlockBaseline(ctx.y, rowHeight, labelLines.length))
+  ctx.doc.setFont('helvetica', 'normal')
+  ctx.doc.setTextColor(...COLORS.text)
+  ctx.doc.text(
+    valueLines,
+    MARGIN + SKILL_LABEL_WIDTH + SKILL_CELL_PADDING,
+    skillBlockBaseline(ctx.y, rowHeight, valueLines.length),
+  )
+  ctx.y += rowHeight
+}
+
 function renderSkills(ctx: RenderContext, document: CvDocument): void {
   checkNewPage(ctx, 40)
   sectionTitle(ctx, document.sectionTitles.skills)
-  const labelWidth = 35
-  const valueWidth = ctx.contentWidth - labelWidth
-  ctx.doc.setFontSize(10)
-  document.skillGroups.forEach((group) => {
-    ctx.doc.setFont('helvetica', 'normal')
-    const lines = ctx.doc.splitTextToSize(group.skills, valueWidth - 6)
-    const rowHeight = Math.max(lines.length * 4.5 + 4, 9)
-    checkNewPage(ctx, rowHeight + 2)
-    ctx.doc.setFillColor(245, 245, 245)
-    ctx.doc.rect(MARGIN, ctx.y, labelWidth, rowHeight, 'F')
-    ctx.doc.setDrawColor(200, 200, 200)
-    ctx.doc.rect(MARGIN, ctx.y, labelWidth, rowHeight, 'S')
-    ctx.doc.rect(MARGIN + labelWidth, ctx.y, valueWidth, rowHeight, 'S')
-    ctx.doc.setFont('helvetica', 'bold')
-    ctx.doc.setTextColor(...COLORS.primary)
-    ctx.doc.text(group.label, MARGIN + 3, ctx.y + rowHeight / 2 + 1)
-    ctx.doc.setFont('helvetica', 'normal')
-    ctx.doc.setTextColor(...COLORS.text)
-    ctx.doc.text(lines, MARGIN + labelWidth + 3, ctx.y + 4)
-    ctx.y += rowHeight
-  })
+  document.skillGroups.forEach((group) => renderSkillRow(ctx, group))
   ctx.y += 8
 }
 
