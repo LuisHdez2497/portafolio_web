@@ -1,7 +1,12 @@
 import { jsPDF } from 'jspdf'
 import { describe, expect, it } from 'vitest'
 import { UI_LABELS, type Locale } from '@/modules/i18n/domain/ui-labels'
-import { SKILL_CELL_PADDING, SKILL_LABEL_WIDTH, skillRowLayout } from './cv-pdf-renderer'
+import {
+  SKILL_CELL_PADDING,
+  SKILL_LABEL_WIDTH,
+  SKILL_MIN_ROW_HEIGHT,
+  skillRowLayout,
+} from './cv-pdf-renderer'
 
 const LOCALES: Locale[] = ['es', 'en']
 const labelUsableWidth = SKILL_LABEL_WIDTH - SKILL_CELL_PADDING * 2
@@ -78,6 +83,6 @@ describe('skillRowLayout', () => {
   it('nunca deja una fila más baja que el mínimo legible', () => {
     const doc = newDoc()
     const layout = skillRowLayout(doc, { label: '', skills: '' }, contentWidthOf(doc))
-    expect(layout.rowHeight).toBeGreaterThanOrEqual(9)
+    expect(layout.rowHeight).toBeGreaterThanOrEqual(SKILL_MIN_ROW_HEIGHT)
   })
 })
