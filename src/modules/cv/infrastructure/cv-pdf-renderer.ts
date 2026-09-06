@@ -10,13 +10,19 @@ const COLORS: Record<string, Rgb> = {
   text: [40, 40, 40],
 }
 
-const MARGIN = 15
-const IMAGE_SIZE = 30
+const MARGIN = 13
+const IMAGE_SIZE = 28
 
 export const SKILL_LABEL_WIDTH = 35
 export const SKILL_CELL_PADDING = 3
 const SKILL_LINE_HEIGHT = 4.5
-const SKILL_MIN_ROW_HEIGHT = 9
+export const SKILL_MIN_ROW_HEIGHT = 7.5
+const SKILL_ROW_PADDING = 3
+const SECTION_GAP = 6
+const ENTRY_GAP = 5
+const LIST_GAP = 3
+const SUMMARY_GAP = 5
+const ENTRY_MIN_BLOCK = 22
 
 interface RenderContext {
   doc: jsPDF
@@ -95,7 +101,7 @@ function renderHeader(ctx: RenderContext, document: CvDocument, imageBase64?: st
   ctx.doc.setDrawColor(...COLORS.accent)
   ctx.doc.setLineWidth(0.5)
   ctx.doc.line(MARGIN, ctx.y, ctx.pageWidth - MARGIN, ctx.y)
-  ctx.y += 8
+  ctx.y += SECTION_GAP
 }
 
 function renderSummary(ctx: RenderContext, document: CvDocument): void {
@@ -105,7 +111,7 @@ function renderSummary(ctx: RenderContext, document: CvDocument): void {
   ctx.doc.setFont('helvetica', 'normal')
   const lines = ctx.doc.splitTextToSize(document.summary, ctx.contentWidth)
   ctx.doc.text(lines, MARGIN, ctx.y)
-  ctx.y += lines.length * 4 + 6
+  ctx.y += lines.length * 4 + SUMMARY_GAP
 }
 
 function skillBlockBaseline(top: number, rowHeight: number, lineCount: number): number {
@@ -131,7 +137,7 @@ export function skillRowLayout(doc: jsPDF, group: CvSkillGroup, contentWidth: nu
   return {
     labelLines,
     valueLines,
-    rowHeight: Math.max(tallest * SKILL_LINE_HEIGHT + 4, SKILL_MIN_ROW_HEIGHT),
+    rowHeight: Math.max(tallest * SKILL_LINE_HEIGHT + SKILL_ROW_PADDING, SKILL_MIN_ROW_HEIGHT),
     valueWidth,
   }
 }
@@ -163,7 +169,7 @@ function renderSkills(ctx: RenderContext, document: CvDocument): void {
   checkNewPage(ctx, 40)
   sectionTitle(ctx, document.sectionTitles.skills)
   document.skillGroups.forEach((group) => renderSkillRow(ctx, group))
-  ctx.y += 8
+  ctx.y += SECTION_GAP
 }
 
 function starPrefix(document: CvDocument, index: number): string {
@@ -175,7 +181,7 @@ function starPrefix(document: CvDocument, index: number): string {
 }
 
 function renderExperienceEntry(ctx: RenderContext, document: CvDocument, entry: CvExperienceEntry): void {
-  checkNewPage(ctx, 35)
+  checkNewPage(ctx, ENTRY_MIN_BLOCK)
   ctx.doc.setFontSize(11)
   ctx.doc.setFont('helvetica', 'bold')
   ctx.doc.setTextColor(...COLORS.primary)
@@ -197,7 +203,7 @@ function renderExperienceEntry(ctx: RenderContext, document: CvDocument, entry: 
   checkNewPage(ctx, 6)
   const resultLines = ctx.doc.splitTextToSize(`• ${document.starLabels.result}: ${entry.achievement}`, ctx.contentWidth - 4)
   ctx.doc.text(resultLines, MARGIN + 2, ctx.y)
-  ctx.y += resultLines.length * 3 + 6
+  ctx.y += resultLines.length * 3 + ENTRY_GAP
 }
 
 function renderExperience(ctx: RenderContext, document: CvDocument): void {
@@ -254,7 +260,7 @@ function renderCertifications(ctx: RenderContext, document: CvDocument): void {
     ctx.doc.text(status, ctx.pageWidth - MARGIN - ctx.doc.getTextWidth(status), ctx.y)
     ctx.y += 6
   })
-  ctx.y += 4
+  ctx.y += LIST_GAP
 }
 
 function renderEducation(ctx: RenderContext, document: CvDocument): void {
@@ -272,7 +278,7 @@ function renderEducation(ctx: RenderContext, document: CvDocument): void {
     ctx.doc.text(status, ctx.pageWidth - MARGIN - ctx.doc.getTextWidth(status), ctx.y)
     ctx.y += 6
   })
-  ctx.y += 4
+  ctx.y += LIST_GAP
 }
 
 function renderLanguages(ctx: RenderContext, document: CvDocument): void {
